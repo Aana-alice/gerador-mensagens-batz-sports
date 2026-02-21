@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batz Sports</title>
+ 
+
+
+<!-- Ícones -->
+<link rel="icon" href="logo_batz_sports.jpg" type="image/png">
+<link rel="apple-touch-icon" href="logo_batz_sports.jpg">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gerador Shopee">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifesto Android -->
+<link rel="manifest" href="logo">
+
+<style>
+  /* Tipografia */
+body { 
+  font-family: 'Inter', sans-serif; 
+  background-color: #0F1115; /* Fundo escuro */
+  color: #FFFFFF;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: #c2dd43; /* verde principal */
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+/* Inputs */
+input, textarea {
+  width: 100%;
+  max-width: 400px;
+  margin: 10px 0;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  background-color: #1A1C22; /* fundo dos inputs mais escuro */
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+input::placeholder, textarea::placeholder {
+  color: #B3B3B3; /* placeholder cinza */
+}
+
+/* Botões */
+button {
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  color: #1A1C22;
+  background: #c2dd43; /* verde principal */
+  cursor: pointer;
+  margin-top: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #657226; /* verde secundário */
+  color:  #e4e3e3;
+}
+
+/* Textarea da mensagem */
+textarea {
+  height: 160px;
+  resize: none;
+  background-color: #1A1C22;
+  color: #FFFFFF;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+  padding: 15px;
+}
+
+/* Layout mobile */
+body > input, body > textarea, body > button {
+  display: block;
+}
+button:last-of-type {
+  background: #657226; /* verde secundário */
+  color: #e4e3e3;
+}
+ #aviso {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  background: #657226; /* verde secundário */
+  color: #FFFFFF;
+  
+  padding: 18px 25px;
+  border-radius: 14px;
+  text-align: center;
+  
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  
+  display: none;
+  z-index: 9999;
+
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translate(-50%, -60%);
+  }
+  to { 
+    opacity: 1; 
+    transform: translate(-50%, -50%);
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Gerador de Mensagens Batz Sports</h2>
+
+<input type="text" id="produto" placeholder="Nome do Produto">
+<input type="text" id="precoAntigo" placeholder="Preço Antigo">
+<input type="text" id="precoNovo" placeholder="Preço Novo">
+<input type="text" id="link" placeholder="Link de Afiliado">
+
+<button onclick="gerarMensagem()">Gerar Mensagem</button>
+
+<textarea id="mensagem" readonly placeholder="Sua mensagem aparecerá aqui"></textarea>
+<button onclick="copiarMensagem()">Copiar Mensagem</button>
+ <button onclick="limparCampos()">Limpar Tudo</button>
+ <div id="aviso" style="display:none;"></div>
+
+<script>
+function gerarMensagem() {
+  const produto = document.getElementById('produto').value.trim();
+  const precoAntigo = document.getElementById('precoAntigo').value.trim();
+  const precoNovo = document.getElementById('precoNovo').value.trim();
+  const link = document.getElementById('link').value.trim();
+
+  if(!produto || !precoAntigo || !precoNovo || !link){
+    alert("Preencha todos os campos!");
+    return;
+  }
+
+  const msg = `VEEEEM VER ESSE ACHADINHO INCRÍVEL 🤩
+
+${produto}
+
+❌ de: _~${precoAntigo}~_  
+🏷️ por apenas: *${precoNovo}*
+
+🛒 Compre aqui: ${link}
+
+*O preço pode variar de acordo com a opção selecionada`;
+
+  document.getElementById('mensagem').value = msg;
+}
+
+function copiarMensagem() {
+  const mensagemArea = document.getElementById('mensagem');
+
+  if (!mensagemArea.value) {
+    mostrarAviso("Não há mensagem para copiar!");
+    return;
+  }
+
+  navigator.clipboard.writeText(mensagemArea.value)
+    .then(() => {
+      mostrarAviso("Mensagem copiada com sucesso! 🚀");
+    })
+    .catch(() => {
+      mostrarAviso("Não foi possível copiar!");
+    });
+}
+ function mostrarAviso(texto) {
+  const aviso = document.getElementById("aviso");
+
+  aviso.innerText = texto;
+  aviso.style.display = "block";
+
+  setTimeout(() => {
+    aviso.style.display = "none";
+  }, 2000); // 2 segundos
+}
+ 
+ function limparCampos() {
+  document.getElementById('produto').value = '';
+  document.getElementById('precoAntigo').value = '';
+  document.getElementById('precoNovo').value = '';
+  document.getElementById('link').value = '';
+  document.getElementById('mensagem').value = '';
+}
+</script>
+
+</body>
+</html>
+
+
+
